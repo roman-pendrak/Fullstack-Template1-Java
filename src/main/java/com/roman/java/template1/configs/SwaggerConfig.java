@@ -74,7 +74,7 @@ public class SwaggerConfig {
 
     private Server getHttpsServer() {
         Server httpsServer = new Server();
-        httpsServer.setUrl("https://fullstack-template1.romanpendrak.com");
+        httpsServer.setUrl("https://fullstack-template1.api.romanpendrak.com");
         httpsServer.setDescription("SSL Environment");
 
         return httpsServer;
