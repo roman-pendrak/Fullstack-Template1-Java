@@ -23,7 +23,7 @@ public class CorsConfig extends CorsFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000, https://fullstack-template1.romanpendrak.com");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Response-Type");
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);
