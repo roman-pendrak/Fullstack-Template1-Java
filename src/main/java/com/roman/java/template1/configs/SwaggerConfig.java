@@ -16,7 +16,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(getComponents())
                 .info(getInfo())
-                .addServersItem(getHttpsServer())
+//                .addServersItem(getHttpsServer())
                 .addSecurityItem(getBearerSecurityRequirement())
                 .addSecurityItem(getOAuthSecurityRequirement());
     }
