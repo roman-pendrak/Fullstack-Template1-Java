@@ -5,18 +5,27 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
 
+    @Value("${spring.security.oauth2.url.authorize}")
+    private String authorizeUrl;
+
+    @Value("${spring.security.oauth2.url.token}")
+    private String tokenUrl;
+
+    @Value("${spring.domain}")
+    private String domain;
     @Bean
     public OpenAPI template1Api() {
         return new OpenAPI()
                 .components(getComponents())
                 .info(getInfo())
-//                .addServersItem(getHttpsServer())
+                .addServersItem(getHttpsServer())
                 .addSecurityItem(getBearerSecurityRequirement())
                 .addSecurityItem(getOAuthSecurityRequirement());
     }
@@ -47,8 +56,8 @@ public class SwaggerConfig {
     private OAuthFlows getOAuthFlows() {
         OAuthFlows oauthFlows = new OAuthFlows();
         OAuthFlow authorizationCodeFlow = new OAuthFlow();
-        authorizationCodeFlow.authorizationUrl("https://dev-rgzfpafckaqnsp78.us.auth0.com/authorize");
-        authorizationCodeFlow.tokenUrl("https://dev-rgzfpafckaqnsp78.us.auth0.com/oauth/token");
+        authorizationCodeFlow.authorizationUrl(authorizeUrl);
+        authorizationCodeFlow.tokenUrl(tokenUrl);
         oauthFlows.setAuthorizationCode(authorizationCodeFlow);
 
         return oauthFlows;
@@ -69,14 +78,12 @@ public class SwaggerConfig {
     private Info getInfo() {
         return new Info()
                 .title("Template1")
-                .version("0.0.1");
+                .version("1.0.0");
     }
 
     private Server getHttpsServer() {
         Server httpsServer = new Server();
-        httpsServer.setUrl("https://fullstack-template1.api.romanpendrak.com");
-        httpsServer.setDescription("SSL Environment");
-
+        httpsServer.setUrl(domain);
         return httpsServer;
     }
 }
