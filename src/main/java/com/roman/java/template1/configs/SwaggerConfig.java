@@ -1,5 +1,6 @@
 package com.roman.java.template1.configs;
 
+import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -15,6 +16,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(getComponents())
                 .info(getInfo())
+                .addServersItem(getHttpsServer())
                 .addSecurityItem(getBearerSecurityRequirement())
                 .addSecurityItem(getOAuthSecurityRequirement());
     }
@@ -68,6 +70,14 @@ public class SwaggerConfig {
         return new Info()
                 .title("Template1")
                 .version("0.0.1");
+    }
+
+    private Server getHttpsServer() {
+        Server httpsServer = new Server();
+        httpsServer.setUrl("https://fullstack-template1.romanpendrak.com");
+        httpsServer.setDescription("SSL Environment");
+
+        return httpsServer;
     }
 }
 
