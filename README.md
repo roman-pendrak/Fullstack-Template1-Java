@@ -9,7 +9,6 @@ $ mvn clean install
 # run dev mode
 $ spring-boot:run
 ```
-# The project is setup to run with/without authentication. 
 # Auth0 Setup :lock:
 Authentication is not enabled out of the box but configuration is simple.
 Follow the steps below to enable OAuth using Spring Security and the free OAuth provider Auth0
