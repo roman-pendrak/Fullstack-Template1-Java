@@ -19,31 +19,46 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @EnableWebSecurity
 @Configuration
-@Profile("!disableSecurity")
 public class SecurityConfig {
 
     @Value("${auth0.audience}")
     private String audience;
 
+    @Value("${spring.profiles.active}")
+    private String profile;
+
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String issuer;
 
+//  There are 2 SecurityFilterChain methods below.
+//  1. Secured using OAuth
+//  2. NOT SECURED
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http.authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+//                .anyRequest().authenticated()
+//        )
+//        .oauth2ResourceServer(oauth2ResourceServer ->
+//                oauth2ResourceServer.jwt(jwt ->
+//                        jwt.decoder(jwtDecoder())
+//                )
+//        )
+//        .build();
+//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2ResourceServer(oauth2ResourceServer ->
-                        oauth2ResourceServer.jwt(jwt ->
-                                jwt.decoder(jwtDecoder())
-                        )
-                )
-                .build();
+        return http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/**").permitAll()
+                .anyRequest().authenticated()
+        )
+        .build();
     }
 
     @Bean
+    @Profile("!disableSecurity")
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
                 JwtDecoders.fromIssuerLocation(issuer);
@@ -58,15 +73,14 @@ public class SecurityConfig {
     }
 
     private record AudienceValidator(String audience) implements OAuth2TokenValidator<Jwt> {
-
         @Override
-            public OAuth2TokenValidatorResult validate(Jwt jwt) {
-                OAuth2Error error = new OAuth2Error("invalid_token", "The required audience is missing", null);
-                if (jwt.getAudience().contains(audience)) {
-                    return OAuth2TokenValidatorResult.success();
-                } else {
-                    return OAuth2TokenValidatorResult.failure(error);
-                }
+        public OAuth2TokenValidatorResult validate(Jwt jwt) {
+            OAuth2Error error = new OAuth2Error("invalid_token", "The required audience is missing", null);
+            if (jwt.getAudience().contains(audience)) {
+                return OAuth2TokenValidatorResult.success();
+            } else {
+                return OAuth2TokenValidatorResult.failure(error);
             }
         }
+    }
 }

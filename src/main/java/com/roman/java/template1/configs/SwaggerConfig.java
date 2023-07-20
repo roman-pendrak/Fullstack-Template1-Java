@@ -25,14 +25,14 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(getComponents())
                 .info(getInfo())
-                .addServersItem(getHttpsServer())
-                .addSecurityItem(getBearerSecurityRequirement())
-                .addSecurityItem(getOAuthSecurityRequirement());
+                .addServersItem(getHttpsServer());
+//                .addSecurityItem(getBearerSecurityRequirement())
+//                .addSecurityItem(getOAuthSecurityRequirement());
     }
 
     private Components getComponents() {
         Components components = new Components();
-        components.addSecuritySchemes("Bearer", getBearerSecurityScheme());
+//        components.addSecuritySchemes("Bearer", getBearerSecurityScheme());
 //        components.addSecuritySchemes("OAuth2", getOAuthSecurityScheme());
         return components;
     }
