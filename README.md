@@ -1,8 +1,13 @@
-# fullstack-template1-java
-Full stack backend template using Java + Spring
+# Fullstack-Template1-Java :man_technologist:
+Modern Java/Spring full stack template using latest technologies :zap:
 
-# java version: 17
-After installing Java 17 and creating the PostgresSql database, simply clone the project and run "mvn clean install", then "spring-boot:run" to get started !
+# Install Java 17+, create database, clone, build, and run!
+```bash
+# build
+$ mvn clean install
 
-# Auth0 Setup
-coming soon
+# run dev mode
+$ spring-boot:run
+```
+# Auth0 Setup :lock:
+Coming soon ...
