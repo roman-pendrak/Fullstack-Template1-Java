@@ -2,13 +2,6 @@
 Modern Java/Spring full stack template using the latest technologies :zap:
 
 # Install Java 17+, create database, clone, build, and run!
-```bash
-# build
-$ mvn clean install
-
-# run dev mode
-$ spring-boot:run
-```
 ```SQL
 CREATE TABLE template1.links (
 	id int8 NOT NULL DEFAULT nextval('template1.users_id_seq'::regclass),
@@ -16,6 +9,13 @@ CREATE TABLE template1.links (
 	url varchar(255) NULL,
 	CONSTRAINT users_pkey PRIMARY KEY (id)
 );
+```
+```bash
+# build
+$ mvn clean install
+
+# run dev mode
+$ spring-boot:run
 ```
 ---
 # Auth0 Setup :lock:
